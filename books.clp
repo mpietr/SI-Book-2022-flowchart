@@ -1,16 +1,25 @@
-(deffacts questions
-    (q1 "Which type of book are you looking for?")
-
+(deftemplate message
+    (slot name (type STRING))
+    (slot question (type STRING))
+    (multislot answers (type STRING))
 )
 
-(defrule start
-    ?f <- (q1 ?x)
+
+
+;(message (name "genre") (question "Which type of book are you looking for?") (answers "fantasy" "sci-fi" "both"))
+;(message (name "fairy-tale") (question "Up for a fairy tale?") (answers "Yes, why mess with classic formula" "No, something more gritty"))
+
+
+(defrule genre
     =>
-    (assert (send ?x))
+    (assert (message (name "genre") (question "Which type of book are you looking for?") (answers "fantasy" "Sci-fi" "Both")))
 )
 
-(defrule test
+(defrule fairy-tale
+    (genre fantasy)
+    ?id <- (message (name ?x))
     =>
-    (assert (testujemy))
+    (retract ?id)
+    (assert (message (name "fairy-tale") (question "Up for a fairy tale?") (answers "Yes, why mess with classic formula" "No, something more gritty")))
 )
 

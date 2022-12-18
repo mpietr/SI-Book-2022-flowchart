@@ -16,10 +16,11 @@
 )
 
 (defrule fairy-tale
-    (genre fantasy)
+    ?f <- (genre fantasy)
     ?id <- (message (name ?x))
     =>
     (retract ?id)
+    (retract ?f)
     (assert (message (name "fairy-tale") (question "Up for a fairy tale?") (answers "Yes, why mess with classic formula" "No, something more gritty")))
 )
 

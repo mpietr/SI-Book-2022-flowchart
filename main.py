@@ -21,9 +21,10 @@ message = dict(list(template.facts())[0])
 print(message)
 
 button_keys = ['button1', 'button2', 'button3']
-text_keys = ['text1', 'text2', 'texts']
+text_keys = ['text1', 'text2', 'text3']
 
 radio_buttons = [[sg.Radio('', 1, key=b), sg.Text(k, pad=(0,0), key=t)] for b,t,k in zip(button_keys, text_keys, message['answers'])]
+
 
 layout = [
     [sg.Text(message['question'], font=('Helvetica', 16), key='q')],
@@ -41,9 +42,8 @@ while True:
         break
     elif event == 'Submit':
         value = [x for x, y in values.items() if y == True][0]
-        env.assert_string('({} {})'.format(message['name'], message['answers'][button_keys.index(value)]))
+        env.assert_string('({} "{}")'.format(message['name'], message['answers'][button_keys.index(value)]))
         env.run()
-        print('({} {})'.format(message['name'], message['answers'][button_keys.index(value)]))
         message = dict(list(template.facts())[0])
         window['q'].update(value=message['question'])
 

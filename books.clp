@@ -45,7 +45,7 @@
     (assert (book (author "Kazuo Ishiguro") (title "The Buried Giant")))
 )
 
-(defrule 
+(defrule rumpelstiltskin-result
     ?f <- (classic-preference "Reverse Rumpelstiltskin")
     ?id <- (message (name ?x))
     =>
@@ -54,7 +54,7 @@
     (assert (book (author "Naomi Novik") (title "Spinning Silver")))
 )
 
-(defrule 
+(defrule goblin-politics-result
     ?f <- (classic-preference "Goblin Politics")
     ?id <- (message (name ?x))
     =>

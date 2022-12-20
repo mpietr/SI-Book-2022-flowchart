@@ -1,7 +1,10 @@
 import clips
 import PySimpleGUI as sg
 
-MAX = 3
+
+MAX = 5
+WIDTH = 600
+HEIGHT = 400
 
 env = clips.Environment()
 
@@ -14,25 +17,31 @@ env.run()
 #environment.run()
 
 
-template = env.find_template('message')
+msg_template = env.find_template('message')
 
-message = dict(list(template.facts())[0])
+message = dict(list(msg_template.facts())[0])
 
 print(message)
 
-button_keys = ['button1', 'button2', 'button3']
-text_keys = ['text1', 'text2', 'text3']
+button_keys = ['button0', 'button1', 'button2', 'button3', 'button4']
+text_keys = ['text0', 'text1', 'text2', 'text3', 'text4']
 
-radio_buttons = [[sg.Radio('', 1, key=b), sg.Text(k, pad=(0,0), key=t)] for b,t,k in zip(button_keys, text_keys, message['answers'])]
+options = message['answers']
+s = len(options)
 
+#radio_buttons = [[sg.Radio('', 1, key=b), sg.Text(k if text_keys.index(t) < 3 else '', pad=(0,0), key=t)] for b,t,k in zip(button_keys, text_keys, message['answers'])]
+radio_buttons = [[sg.Radio('', 1, key=button_keys[i], visible=(i < 3)), sg.Text(options[i] if i < 3 else '', pad=(0,0), key=text_keys[i])] for i in range(MAX)]
 
 layout = [
     [sg.Text(message['question'], font=('Helvetica', 16), key='q')],
     radio_buttons,
-    [sg.Submit()]
+    [sg.Button('Submit')]
 ]
 
-window = sg.Window("2022 Book Discovery", layout, size=(600, 400))
+
+
+window = sg.Window("2022 Book Discovery", layout, size=(WIDTH, HEIGHT))
+
 
 
 while True:
@@ -44,16 +53,54 @@ while True:
         value = [x for x, y in values.items() if y == True][0]
         env.assert_string('({} "{}")'.format(message['name'], message['answers'][button_keys.index(value)]))
         env.run()
-        message = dict(list(template.facts())[0])
-        window['q'].update(value=message['question'])
 
-        options = message['answers']
-        n = len(options)
+        message_list = list(msg_template.facts())
 
-        for i in range(MAX):
-            if i < n:
-                window[text_keys[i]].update(value=options[i])
-            else:
-                window[text_keys[i]].update(visible=False)
-                window[button_keys[i]].update(visible=False)
+        #if list is not empty
+        if message_list:
+            
+            message = dict(message_list[0])
+            print(message)
+            window['q'].update(value=message['question'])
+
+            options = message['answers']
+            n = len(options)
+
+            for i in range(MAX):
+                print(n, i)
+                if i < n:
+                    window[button_keys[i]].update(visible=True)
+                    window[text_keys[i]].update(value=options[i], visible=True)
+                    print(text_keys[i], options[i])
+                    print("visible")
+                else:
+                    print("invisible")
+                    window[text_keys[i]].update(visible=False)
+                    window[button_keys[i]].update(visible=False)
+        else:
+            window.close()
+            break
+
+
+env.run()
+
+res_template = env.find_template('book')
+
+result = dict(list(res_template.facts())[0])
+
+result_layout = [
+    [sg.Text(result['title'])],
+    [sg.Text(result['author'])],
+    [sg.Button("Close")]
+]
+
+result_window = sg.Window("2022 Book Discovery", result_layout, size=(WIDTH, HEIGHT))
+
+while True:
+    event, values = result_window.read()
+
+    if event == sg.WINDOW_CLOSED or event == "Close":
+        break
+
+
 

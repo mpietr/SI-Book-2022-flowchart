@@ -36,6 +36,32 @@
     (assert (message (name "classic-preference") (question "Which of the classics do you prefer?") (answers "A gritty, existential fable" "Reverse Rumpelstiltskin" "Goblin Politics" "A short story")))
 )
 
+(defrule gritty-fable-result
+    ?f <- (classic-preference "A gritty, existential fable")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Kazuo Ishiguro") (title "The Buried Giant")))
+)
+
+(defrule 
+    ?f <- (classic-preference "Reverse Rumpelstiltskin")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Naomi Novik") (title "Spinning Silver")))
+)
+
+(defrule 
+    ?f <- (classic-preference "Goblin Politics")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Katherine Addison") (title "The Goblin Emperor")))
+)
 
 (defrule short-story
     ?f <- (classic-preference "A short story")

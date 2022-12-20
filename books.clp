@@ -12,7 +12,7 @@
 
 (defrule genre
     =>
-    (assert (message (name "genre") (question "Which type of book are you looking for?") (answers "Fantasy" "Sci-fi" "Both")))
+    (assert (message (name "genre") (question "Which type of book are you looking for?") (answers "Fantasy" "Sci-fi" "A little bit of both")))
 )
 
 
@@ -108,7 +108,7 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (book (author "Rebecca Roanhorse") (title "Black Sun (Between Earth and Sky, #1)")))
+    (assert (book (author "Rebecca Roanhorse") (title "Black Sun")))
 )
 
 (defrule magical-revolution
@@ -126,7 +126,7 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (book (author "Fonda Lee") (title "Jade City (The Green Bone Saga, #1)")))
+    (assert (book (author "Fonda Lee") (title "Jade City")))
 )
 
 (defrule ghostly-intrigue-result
@@ -135,7 +135,7 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (book (author "Sofia Samatar") (title "A Stranger un Olondria (Olondria)")))
+    (assert (book (author "Sofia Samatar") (title "A Stranger un Olondria")))
 )
 
 (defrule machines-result
@@ -144,7 +144,7 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (book (author "Joe Abercrombie") (title "A Little Haterd (The Age of Madness, #1)")))
+    (assert (book (author "Joe Abercrombie") (title "A Little Haterd")))
 )
 
 
@@ -173,7 +173,7 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (book (author "R.T.Kuang") (title "The Poppy War (The Poppy War, #1")))
+    (assert (book (author "R.T.Kuang") (title "The Poppy War")))
 )
 
 (defrule overthrowed-gods-result
@@ -182,7 +182,7 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (book (author "Robert Jackson Bennet") (title "City of Stairs (The Divine Cities, #1)")))
+    (assert (book (author "Robert Jackson Bennet") (title "City of Stairs")))
 )
 
 (defrule gods-among-us
@@ -209,7 +209,7 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (book (author "Jo Walton") (title "The Just City (Thessaly, #1)")))
+    (assert (book (author "Jo Walton") (title "The Just City")))
 )
 
 (defrule shapeshifters-result
@@ -218,7 +218,7 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (book (author "Marlon James") (title "Black Leopard, Red Wolf (The Dark Star Trilogy, #1)")))
+    (assert (book (author "Marlon James") (title "Black Leopard, Red Wolf")))
 )
 
 (defrule travel
@@ -236,7 +236,7 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (book (author "Seanan McGuire") (title "Every Heart A Doorway (Wayward Children, #1)")))
+    (assert (book (author "Seanan McGuire") (title "Every Heart A Doorway")))
 )
 
 (defrule in-past
@@ -245,8 +245,9 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (message (name "in-past") (question "What kind of place in the past do you want to travel to?") (answers "Egypt steeped in magic" "With a magic swindler" "With a magic mapmaker")))
+    (assert (message (name "in-past") (question "What kind of place in the past?") (answers "Egypt steeped in magic" "With a magic swindler" "With a magic mapmaker")))
 )
+
 
 (defrule travel-past-egipy-result
     ?f <- (in-past "Egypt steeped in magic")
@@ -254,7 +255,7 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (book (author "P. Djeli Clark") (title "A Master of Djinn (Dead Djinn Universe, #1)")))
+    (assert (book (author "P. Djeli Clark") (title "A Master of Djinn")))
 )
 
 (defrule magic-swindler-result
@@ -263,7 +264,7 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (book (author "S.A. Chakraborty") (title "The City of Brass (The Deavabad Trilogy, #1)")))
+    (assert (book (author "S.A. Chakraborty") (title "The City of Brass")))
 )
 
 (defrule magic-mapmaker-result
@@ -281,7 +282,7 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (message (name "magical-borders") (question "Do you really want to travel somewhere with magical borders?") (answers "Perhaps?" "Yes, bring on the new world")))
+    (assert (message (name "magical-borders") (question "Are you sure you want magical borders?") (answers "Perhaps?" "Yes, bring on the new world")))
 )
 
 (defrule perhaps-magical-borders-result
@@ -308,7 +309,7 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (book (author "V.E.Schwab") (title "A Darker Shade of Magic (Shades of Magic, #1)")))
+    (assert (book (author "V.E.Schwab") (title "A Darker Shade of Magic")))
 )
 
 (defrule magic-dried-up-result
@@ -317,7 +318,7 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (book (author "Zen Cho") (title "Sorcerer to the Crown (Sorcerer Royal, #1)")))
+    (assert (book (author "Zen Cho") (title "Sorcerer to the Crown")))
 )
 
 (defrule magical-NY-result
@@ -327,4 +328,133 @@
     (retract ?id)
     (retract ?f)
     (assert (book (author "Victor LaValle") (title "The Changeling")))
+)
+
+;both branch
+
+(defrule genre-mix-preference
+    ?f <- (genre "A little bit of both")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (message (name "genre-mix-preference") (question "Which do you prefer?") (answers "A bit of horror" "Alternative history")))
+)
+
+(defrule horror
+    ?f <- (genre-mix-preference "A bit of horror")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (message (name "horror") (question "What type of horror?") (answers "Dark and omnious" "Religious horror in space")))
+)
+
+(defrule horror-dark-result
+    ?f <- (horror "Dark and omnious")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Silvia Moreno-Garcia") (title "Mexican Gothic")))
+)
+
+(defrule horror-in-space-result
+    ?f <- (horror "Religious horror in space")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Tamsyn Muir") (title "Gideon The Ninth")))
+)
+
+(defrule alternative-history
+    ?f <- (genre-mix-preference "Alternative history")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (message (name "alternative-history") (question "Where should the alternative history take place?") (answers "In the past" "In the present" "In the future")))
+)
+
+(defrule alternative-in-past-result
+    ?f <- (alternative-history "In the past")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Robinette Kowal") (title "The Calculating Stars")))
+)
+
+
+(defrule pandemic-too-soon
+    ?f <- (alternative-history "In the present")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (message (name "pandemic-too-soon") (question "Too soon for a pandemic?") (answers "Yes" "No")))
+)
+
+(defrule pandemic-result
+    ?f <- (pandemic-too-soon "No")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Emily St. John Mandel") (title "Station Eleven")))
+)
+
+(defrule instead-of-pandemic
+    ?f <- (pandemic-too-soon "Yes")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (message (name "instead-of-pandemic") (question "Which would you rather do?") (answers "Escape political unrest" "Start-revolution")))
+)
+
+(defrule political-unrest-result
+    ?f <- (instead-of-pandemic "Escape political unrest")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "E. Lily Yu") (title "On Fragile Waves")))
+)
+
+(defrule revolution-result
+    ?f <- (instead-of-pandemic "Start-revolution")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Tochi Onyebuchi") (title "Riot Baby")))
+)
+
+(defrule fighting-in-the-future
+    ?f <- (alternative-history "In the future")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (message (name "fighting-in-the-future") (question "What would you rather fight?") (answers "Imperialism" "Climate change")))
+)
+
+(defrule imperialism-result
+    ?f <- (fighting-in-the-future "Imperialism")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Seth Dickinson") (title "The Traitor Baru Cormorant")))
+)
+
+(defrule climate-change-result
+    ?f <- (fighting-in-the-future "Climate change")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Omar El Akkad") (title "American War")))
 )

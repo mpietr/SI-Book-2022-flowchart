@@ -2,9 +2,9 @@ import clips
 import PySimpleGUI as sg
 
 
-MAX = 5
-WIDTH = 600
-HEIGHT = 400
+MAX = 4
+WIDTH = 500
+HEIGHT = 300
 
 env = clips.Environment()
 
@@ -88,13 +88,14 @@ res_template = env.find_template('book')
 
 result = dict(list(res_template.facts())[0])
 
+
 result_layout = [
-    [sg.Text(result['title'])],
-    [sg.Text(result['author'])],
-    [sg.Button("Close")]
+    [sg.Text(result['title'], font='Any 20', pad=(10,10))],
+    [sg.Text(result['author'], font='Any 15')],
+    [sg.Button("Close", size=(10,2), pad=(30,30))]
 ]
 
-result_window = sg.Window("2022 Book Discovery", result_layout, size=(WIDTH, HEIGHT))
+result_window = sg.Window("Discovered book", result_layout, size=(WIDTH, 200), element_justification='c')
 
 while True:
     event, values = result_window.read()

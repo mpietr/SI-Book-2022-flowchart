@@ -1,6 +1,8 @@
 import clips
 import PySimpleGUI as sg
 
+sg.theme('TealMono')
+
 DEBUG = False
 
 MAX = 4
@@ -51,7 +53,6 @@ while True:
 
             message_list = list(msg_template.facts())
 
-            # if list is not empty
             if message_list:
 
                 message = dict(message_list[0])

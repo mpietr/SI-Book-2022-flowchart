@@ -30,7 +30,7 @@ options = message['answers']
 s = len(options)
 
 #radio_buttons = [[sg.Radio('', 1, key=b), sg.Text(k if text_keys.index(t) < 3 else '', pad=(0,0), key=t)] for b,t,k in zip(button_keys, text_keys, message['answers'])]
-radio_buttons = [[sg.Radio('', 1, key=button_keys[i], visible=(i < 3)), sg.Text(options[i] if i < 3 else '', pad=(0,0), key=text_keys[i])] for i in range(MAX)]
+radio_buttons = [[sg.Radio('', 1, key=button_keys[i], visible=(i < 3), default=(i == -1)), sg.Text(options[i] if i < 3 else '', pad=(0,0), key=text_keys[i])] for i in range(MAX)]
 
 layout = [
     [sg.Text(message['question'], font=('Helvetica', 16), key='q')],
@@ -50,36 +50,37 @@ while True:
     if event == sg.WINDOW_CLOSED:
         break
     elif event == 'Submit':
-        value = [x for x, y in values.items() if y == True][0]
-        env.assert_string('({} "{}")'.format(message['name'], message['answers'][button_keys.index(value)]))
-        env.run()
+        if len([x for x, y in values.items() if y == True]) > 0:
+            value = [x for x, y in values.items() if y == True][0]
+            env.assert_string('({} "{}")'.format(message['name'], message['answers'][button_keys.index(value)]))
+            env.run()
 
-        message_list = list(msg_template.facts())
+            message_list = list(msg_template.facts())
 
-        #if list is not empty
-        if message_list:
-            
-            message = dict(message_list[0])
-            print(message)
-            window['q'].update(value=message['question'])
+            #if list is not empty
+            if message_list:
 
-            options = message['answers']
-            n = len(options)
+                message = dict(message_list[0])
+                print(message)
+                window['q'].update(value=message['question'])
 
-            for i in range(MAX):
-                print(n, i)
-                if i < n:
-                    window[button_keys[i]].update(visible=True)
-                    window[text_keys[i]].update(value=options[i], visible=True)
-                    print(text_keys[i], options[i])
-                    print("visible")
-                else:
-                    print("invisible")
-                    window[text_keys[i]].update(visible=False)
-                    window[button_keys[i]].update(visible=False)
-        else:
-            window.close()
-            break
+                options = message['answers']
+                n = len(options)
+
+                for i in range(MAX):
+                    print(n, i)
+                    if i < n:
+                        window[button_keys[i]].update(visible=True)
+                        window[text_keys[i]].update(value=options[i], visible=True)
+                        print(text_keys[i], options[i])
+                        print("visible")
+                    else:
+                        print("invisible")
+                        window[text_keys[i]].update(visible=False)
+                        window[button_keys[i]].update(visible=False)
+            else:
+                window.close()
+                break
 
 
 env.run()

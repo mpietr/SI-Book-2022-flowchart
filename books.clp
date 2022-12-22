@@ -511,11 +511,11 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (message (name "bring-feature") (question "What should the future look like?") (answers "Where humans escape" "Where humanity is struggling")))
+    (assert (message (name "bring-feature") (question "What should the future look like?") (answers "Humans escaping" "Humanity struggling")))
 )
 
 (defrule human-escape
-    ?f <- (bring-feature "Where humans escape")
+    ?f <- (bring-feature "Humans escaping")
     ?id <- (message (name ?x))
     =>
     (retract ?id)
@@ -542,12 +542,12 @@
 )
 
 (defrule humanity-struggling
-    ?f <- (bring-feature "Where humanity is struggling")
+    ?f <- (bring-feature "Humanity struggling")
     ?id <- (message (name ?x))
     =>
     (retract ?id)
     (retract ?f)
-    (assert (message (name "humanity-struggling") (question "What are the consequences of the problems?") (answers "We're ready to rebuild" "We've become redugees")))
+    (assert (message (name "humanity-struggling") (question "What are the consequences of the problems?") (answers "We're ready to rebuild" "We've become refugees")))
 )
 
 (defrule ready-to-rebuild-result
@@ -592,7 +592,7 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (message (name "other-planets") (question "Where should there be another planet?") (answers "Let's start closer to home" "Let's go to another galaxy")))
+    (assert (message (name "other-planets") (question "Where should the another planet be?") (answers "Let's start closer to home" "Let's go to another galaxy")))
 )
 
 (defrule another-galaxy
@@ -601,20 +601,20 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (message (name "another-galaxy") (question "Why do we go to another galatics?") (answers "To explore" "To settle down")))
+    (assert (message (name "another-galaxy") (question "Why do we go to a different galaxy?") (answers "To explore" "To settle down")))
 )
 
-(defrule explore-galaxy
+(defrule explore-with-AI
     ?f <- (another-galaxy "To explore")
     ?id <- (message (name ?x))
     =>
     (retract ?id)
     (retract ?f)
-    (assert (message (name "explore-galaxy") (question "What do we want to explore in this galaxy?") (answers "With sentient AIs" "To nature of reality")))
+    (assert (message (name "explore-with-AI") (question "Do you want to explore with sentient AIs??") (answers "Yes" "No")))
 )
 
-(defrule nature-of-reality-result
-    ?f <- (explore-galaxy "To nature of reality")
+(defrule without-AI-result
+    ?f <- (explore-with-AI "No")
     ?id <- (message (name ?x))
     =>
     (retract ?id)
@@ -623,12 +623,12 @@
 )
 
 (defrule sentient-ai
-    ?f <- (explore-galaxy "With sentient AIs")
+    ?f <- (explore-with-AI "Yes")
     ?id <- (message (name ?x))
     =>
     (retract ?id)
     (retract ?f)
-    (assert (message (name "sentient-ai") (question "PYTANIE?") (answers "Addicted to TV shows" "With a hive mind")))
+    (assert (message (name "sentient-ai") (question "What kind of AI?") (answers "Addicted to TV shows" "With a hive mind")))
 )
 
 (defrule addicted-tv-result
@@ -655,7 +655,7 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (message (name "settle-down") (question "Where to settle down?") (answers "At the finest of-world university" "On another planet ruled by...")))
+    (assert (message (name "settle-down") (question "Settle down where?") (answers "At the finest of-world university" "On another planet ruled by someone")))
 )
 
 (defrule finest-university-result
@@ -668,12 +668,12 @@
 )
 
 (defrule planet-ruled-by
-    ?f <- (settle-down "On another planet ruled by...")
+    ?f <- (settle-down "On another planet ruled by someone")
     ?id <- (message (name ?x))
     =>
     (retract ?id)
     (retract ?f)
-    (assert (message (name "planet-ruled-by") (question "Who should rule the another planet?") (answers "Empires inspired by the past" "Intelligent spiders uplifted by science")))
+    (assert (message (name "planet-ruled-by") (question "Who should rule the planet?") (answers "Empires inspired by the past" "Intelligent spiders uplifted by science")))
 )
 
 (defrule empires-inspired-result
@@ -700,7 +700,7 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (message (name "closer-home") (question "PYTANIE?") (answers "Let the action come to us" "where adventure leads")))
+    (assert (message (name "closer-home") (question "What to do closer to home?") (answers "Let the action come to us" "See where adventure leads")))
 )
     
 (defrule action-come-to-us
@@ -740,7 +740,7 @@
 )
 
 (defrule adventure-leads
-    ?f <- (closer-home "And see where adventure leads")
+    ?f <- (closer-home "See where adventure leads")
     ?id <- (message (name ?x))
     =>
     (retract ?id)
@@ -772,7 +772,7 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (message (name "find-new-home") (question "What do you want your new home to look like?") (answers "Using a changing extradimensional field" "On generational ship with a racial divide")))
+    (assert (message (name "find-new-home") (question "What should your new home be like?") (answers "Using a changing extradimensional field" "On generational ship with a racial divide")))
 )
 
 (defrule changing-extradimensional-field-result

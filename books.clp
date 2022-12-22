@@ -437,7 +437,7 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (message (name "instead-of-pandemic") (question "Which would you rather do?") (answers "Escape political unrest" "Start-revolution")))
+    (assert (message (name "instead-of-pandemic") (question "Which would you rather do?") (answers "Escape political unrest" "Start a revolution")))
 )
 
 (defrule political-unrest-result
@@ -450,7 +450,7 @@
 )
 
 (defrule revolution-result
-    ?f <- (instead-of-pandemic "Start-revolution")
+    ?f <- (instead-of-pandemic "Start a revolution")
     ?id <- (message (name ?x))
     =>
     (retract ?id)
@@ -556,7 +556,7 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (book (author "Jeff VaderMeer") (title "Anihilation (The Southern Reach Trilogy, Book 1)")))
+    (assert (book (author "Jeff VaderMeer") (title "Anihilation")))
 )
 
 (defrule refugees-result
@@ -565,7 +565,7 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (book (author "Tade Thompson") (title "Rosewater (The Wormwood Trilogy, Book 1)")))
+    (assert (book (author "Tade Thompson") (title "Rosewater")))
 )
 
 (defrule focus-on-today-result
@@ -610,11 +610,11 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (message (name "explore-with-AI") (question "Do you want to explore with sentient AIs??") (answers "Yes" "No")))
+    (assert (message (name "explore-with-AI") (question "Do you want to explore with sentient AIs?") (answers "Yes" "No, explore nature")))
 )
 
 (defrule without-AI-result
-    ?f <- (explore-with-AI "No")
+    ?f <- (explore-with-AI "No, explore nature")
     ?id <- (message (name ?x))
     =>
     (retract ?id)
@@ -655,11 +655,11 @@
     =>
     (retract ?id)
     (retract ?f)
-    (assert (message (name "settle-down") (question "Settle down where?") (answers "At the finest of-world university" "On another planet ruled by someone")))
+    (assert (message (name "settle-down") (question "Settle down where?") (answers "At the finest off-world university" "On another planet ruled by someone")))
 )
 
 (defrule finest-university-result
-    ?f <- (settle-down "At the finest of-world university")
+    ?f <- (settle-down "At the finest off-world university")
     ?id <- (message (name ?x))
     =>
     (retract ?id)

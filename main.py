@@ -4,7 +4,7 @@ import PySimpleGUI as sg
 DEBUG = False
 
 MAX = 4
-WIDTH = 500
+WIDTH = 600
 HEIGHT = 300
 
 env = clips.Environment()
@@ -20,17 +20,18 @@ message = dict(list(msg_template.facts())[0])
 if DEBUG:
     print(message)
 
-button_keys = ['button0', 'button1', 'button2', 'button3', 'button4']
-text_keys = ['text0', 'text1', 'text2', 'text3', 'text4']
+BUTTON_KEYS = ['button0', 'button1', 'button2', 'button3', 'button4']
+TEXT_KEYS = ['text0', 'text1', 'text2', 'text3', 'text4']
 
 options = message['answers']
 s = len(options)
 
-radio_buttons = [[sg.Radio('', 1, key=button_keys[i], visible=(i < 3), default=(i == -1)),
-                  sg.Text(options[i] if i < 3 else '', pad=(0, 0), key=text_keys[i])] for i in range(MAX)]
+radio_buttons = [[sg.Radio('', 1, key=BUTTON_KEYS[i], visible=(i < 3), default=(i == -1)),
+                  sg.Text(options[i] if i < 3 else '', pad=(0, 0), font='Any 11', key=TEXT_KEYS[i])] for i in
+                 range(MAX)]
 
 layout = [
-    [sg.Text(message['question'], font=('Helvetica', 16), key='q')],
+    [sg.Text(message['question'], font=('Helvetica', 18), key='q')],
     radio_buttons,
     [sg.Button('Submit')]
 ]
@@ -45,7 +46,7 @@ while True:
     elif event == 'Submit':
         if len([x for x, y in values.items() if y is True]) > 0:
             value = [x for x, y in values.items() if y is True][0]
-            env.assert_string('({} "{}")'.format(message['name'], message['answers'][button_keys.index(value)]))
+            env.assert_string('({} "{}")'.format(message['name'], message['answers'][BUTTON_KEYS.index(value)]))
             env.run()
 
             message_list = list(msg_template.facts())
@@ -62,18 +63,18 @@ while True:
                 n = len(options)
 
                 for i in range(MAX):
-                    window[button_keys[i]].update(value=False)
+                    window[BUTTON_KEYS[i]].update(value=False)
                     if DEBUG:
                         print(n, i)
                     if i < n:
-                        window[button_keys[i]].update(visible=True)
-                        window[text_keys[i]].update(value=options[i], visible=True)
+                        window[BUTTON_KEYS[i]].update(visible=True)
+                        window[TEXT_KEYS[i]].update(value=options[i], visible=True)
                         if DEBUG:
-                            print(text_keys[i], options[i])
+                            print(TEXT_KEYS[i], options[i])
                             print("visible")
                     else:
-                        window[text_keys[i]].update(visible=False)
-                        window[button_keys[i]].update(visible=False)
+                        window[TEXT_KEYS[i]].update(visible=False)
+                        window[BUTTON_KEYS[i]].update(visible=False)
                         if DEBUG:
                             print("invisible")
             else:
@@ -96,6 +97,5 @@ result_window = sg.Window("Discovered book", result_layout, size=(WIDTH, 200), e
 
 while True:
     event, values = result_window.read()
-
     if event == sg.WINDOW_CLOSED or event == "Close":
         break

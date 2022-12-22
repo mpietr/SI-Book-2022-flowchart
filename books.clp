@@ -12,7 +12,7 @@
 
 (defrule genre
     =>
-    (assert (message (name "genre") (question "Which type of book are you looking for?") (answers "Fantasy" "Sci-fi" "A little bit of both")))
+    (assert (message (name "genre") (question "Which type of book are you looking for?") (answers "Fantasy" "Sci-Fi" "A little bit of both")))
 )
 
 
@@ -184,7 +184,7 @@
     (assert (message (name "show-running") (question "Who's running the show?") (answers "The Gods" "The People")))
 )
 
-(defrule gods-involvement 
+(defrule gods-involvement
     ?f <- (show-running "The Gods")
     ?id <- (message (name ?x))
     =>
@@ -484,3 +484,105 @@
     (retract ?f)
     (assert (book (author "Omar El Akkad") (title "American War")))
 )
+
+; sci-fi branch
+
+(defrule travel-planets
+    ?f <- (genre "Sci-Fi")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (message (name "travel-planets") (question "Want to travel to other planets?") (answers "Yes. Other planets it is" "No. Let's stay on Earth")))
+)
+
+(defrule stay-on-earth
+    ?f <- (travel-planets "No. Let's stay on Earth")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (message (name "stay-on-earth") (question "Today, or an ultra-modern future?") (answers "Focus on today" "Bring on the future" "Why not both?")))
+)
+
+(defrule bring-feature
+    ?f <- (stay-on-earth "Bring on the future")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (message (name "bring-feature") (question "PYTANIE?") (answers "Where humans escape" "Where humanity is struggling")))
+)
+
+(defrule human-escape
+    ?f <- (bring-feature "Where humans escape")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (message (name "human-escape") (question "PYTANIE?") (answers "Through the multiverse" "To where time travel is weaponized")))
+)
+
+(defrule multiverse-result
+    ?f <- (human-escape "Through the multiverse")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Micaiah Johnson") (title "The Space Between Worlds")))
+)
+
+(defrule time-travel-result
+    ?f <- (human-escape "To where time travel is weaponized")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Amal El-Mohtar and Max Gladstone") (title "This Is How You Lose the Time War")))
+)
+
+(defrule humanity-struggling
+    ?f <- (bring-feature "Where humanity is struggling")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (message (name "humanity-struggling") (question "PYTANIE?") (answers "And we're ready to rebuild" "And we've become redugees")))
+)
+
+(defrule ready-to-rebuild-result
+    ?f <- (humanity-struggling "And we're ready to rebuild")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Jeff VaderMeer") (title "Anihilation (The Southern Reach Trilogy, Book 1)")))
+)
+
+(defrule refugees-result
+    ?f <- (humanity-struggling "And we've become refugees")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Tade Thompson") (title "Rosewater (The Wormwood Trilogy, Book 1)")))
+)
+
+(defrule focus-on-today-result
+    ?f <- (stay-on-earth "Focus on today")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Sarah Gailey") (title "The Echo Wife")))
+)
+
+(defrule why-not-both-result
+    ?f <- (stay-on-earth "Why not both?")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Ted Chiang") (title "Exhalation")))
+)
+

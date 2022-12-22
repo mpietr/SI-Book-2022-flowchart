@@ -693,3 +693,102 @@
     (retract ?f)
     (assert (book (author "Adrian Tchaikovsky") (title "Children of Time")))
 )
+
+(defrule closer-home
+    ?f <- (other-planets "Let's start closer to home")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (message (name "closer-home") (question "PYTANIE?") (answers "Let the action come to us" "And see there adventure leads")))
+)
+    
+(defrule action-come-to-us
+    ?f <- (closer-home "Let the action come to us")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (message (name "action-come-to-us") (question "Which do you prefer?") (answers "A brewing war with alien tech" "A documentary about a colony's last survivor" "First contact through a VR game")))
+)
+
+(defrule brewing-war-result
+    ?f <- (action-come-to-us "A brewing war with alien tech")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "James S.A. Corey") (title "Leviathan Wakes")))
+)
+
+(defrule documentary-result
+    ?f <- (action-come-to-us "A documentary about a colony's last survivor")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Catherynne M. Valente") (title "Radiance")))
+)
+
+(defrule first-contact-result
+    ?f <- (action-come-to-us "First contact through a VR game")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Cixin Liu") (title "The Three-Body Problem")))
+)
+
+(defrule adventure-leads
+    ?f <- (closer-home "And see there adventure leads")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (message (name "adventure-leads") (question "PYTANIE?") (answers "To explore new worlds, seek out new life, and new civilizations" "To find new home" "To science some shit")))
+)
+
+(defrule some-shit-result
+    ?f <- (adventure-leads "To science some shit")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Andy Weir") (title "The Martian")))
+)
+
+(defrule explore-strange-worlds-result
+    ?f <- (adventure-leads "To explore new worlds, seek out new life, and new civilizations")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Becky Chambers") (title "The Long Way to a Small, Angry Planet")))
+)
+
+(defrule find-new-home
+    ?f <- (adventure-leads "To find new home")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (message (name "find-new-home") (question "PYTANIE?") (answers "Using a changing extradimensional field" "On generational ship with a racial divide")))
+)
+
+(defrule changing-extradimensional-field-result
+    ?f <- (find-new-home "Using a changing extradimensional field")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "John Scalzi") (title "The Collapsing Empire")))
+)
+
+(defrule generational-ship-result
+    ?f <- (find-new-home "On generational ship with a racial divide")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Rivers Solomon") (title "An Unkindness of Ghosts")))
+)

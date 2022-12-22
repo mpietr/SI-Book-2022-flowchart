@@ -586,3 +586,110 @@
     (assert (book (author "Ted Chiang") (title "Exhalation")))
 )
 
+(defrule other-planets
+    ?f <- (travel-planets "Yes. Other planets it is")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (message (name "other-planets") (question "PYTANIE?") (answers "Let's start closer to home" "Let's go to another galaxy")))
+)
+
+(defrule another-galaxy
+    ?f <- (other-planets "Let's go to another galaxy")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (message (name "another-galaxy") (question "PYTANIE?") (answers "To explore" "To settle down")))
+)
+
+(defrule explore-galaxy
+    ?f <- (another-galaxy "To explore")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (message (name "explore-galaxy") (question "PYTANIE?") (answers "With sentient AIs" "To nature of reality")))
+)
+
+(defrule nature-of-reality-result
+    ?f <- (explore-galaxy "To nature of reality")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Yoon Ha Lee") (title "Ninefox Gambit")))
+)
+
+(defrule sentient-ai
+    ?f <- (explore-galaxy "With sentient AIs")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (message (name "sentient-ai") (question "PYTANIE?") (answers "Addicted to TV shows" "With a hive mind")))
+)
+
+(defrule addicted-tv-result
+    ?f <- (sentient-ai "Addicted to TV shows")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Martha Wells") (title "All Systems Red")))
+)
+
+(defrule hive-mind-result
+    ?f <- (sentient-ai "With a hive mind")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Ann Leckie") (title "Ancillary Justice")))
+)
+
+(defrule settle-down
+    ?f <- (another-galaxy "To settle down")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (message (name "settle-down") (question "PYTANIE?") (answers "At the finest of-world university" "On another planet ruled by...")))
+)
+
+(defrule finest-university-result
+    ?f <- (settle-down "At the finest of-world university")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Nnedi Okorafor") (title "Binti")))
+)
+
+(defrule planet-ruled-by
+    ?f <- (settle-down "On another planet ruled by...")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (message (name "planet-ruled-by") (question "PYTANIE?") (answers "Empires inspired by the past" "Intelligent spiders uplifted by science")))
+)
+
+(defrule empires-inspired-result
+    ?f <- (planet-ruled-by "Empires inspired by the past")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Arkady Martine") (title "A Memory Called Empire")))
+)
+
+(defrule intelligent-spiders-result
+    ?f <- (planet-ruled-by "Intelligent spiders uplifted by science")
+    ?id <- (message (name ?x))
+    =>
+    (retract ?id)
+    (retract ?f)
+    (assert (book (author "Adrian Tchaikovsky") (title "Children of Time")))
+)

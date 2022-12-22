@@ -62,6 +62,7 @@ while True:
                 n = len(options)
 
                 for i in range(MAX):
+                    window[button_keys[i]].update(value=False)
                     if DEBUG:
                         print(n, i)
                     if i < n:

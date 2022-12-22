@@ -42,7 +42,6 @@ window = sg.Window("2022 Book Discovery", layout, size=(WIDTH, HEIGHT))
 
 while True:
     event, values = window.read()
-
     if event == sg.WINDOW_CLOSED:
         break
     elif event == 'Submit':
@@ -54,7 +53,6 @@ while True:
             message_list = list(msg_template.facts())
 
             if message_list:
-
                 message = dict(message_list[0])
                 if DEBUG:
                     print(message)
@@ -83,10 +81,12 @@ while True:
                 break
 
 env.run()
-
 res_template = env.find_template('book')
 
-result = dict(list(res_template.facts())[0])
+try:
+    result = dict(list(res_template.facts())[0])
+except IndexError:
+    exit()
 
 result_layout = [
     [sg.Text(result['title'], font='Any 20', pad=(10, 10))],
